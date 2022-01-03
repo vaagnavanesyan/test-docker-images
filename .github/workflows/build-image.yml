@@ -1,0 +1,29 @@
+name: Build an image
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: "image version"
+        required: true
+        type: string
+      username:
+        type: string
+        description: "registry username"
+        required: true
+      password:
+        type: string
+        description: "registry password"
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ inputs.username }}
+          password: ${{ inputs.password }}
+          repository: vaagn/test-docker-images
+          tags: ${{ inputs.version }}

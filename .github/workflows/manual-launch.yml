@@ -1,0 +1,15 @@
+name: Docker Image CI
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "image version"
+        required: true
+        type: string
+jobs:
+  manual-build:
+    uses: vaagnavanesyan/test-docker-images/.github/workflows/build-image.yml@master
+    with:
+      version: ${{ github.event.inputs.version }}
+      username: ${{ secrets.DOCKER_USERNAME }}
+      password: ${{ secrets.DOCKER_PASSWORD }}

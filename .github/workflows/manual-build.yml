@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Manual build
 on:
   workflow_dispatch:
     inputs:
@@ -8,7 +8,7 @@ on:
         type: string
 jobs:
   manual-build:
-    uses: vaagnavanesyan/test-docker-images/.github/workflows/build-image.yml@master
+    uses: vaagnavanesyan/test-docker-images/.github/workflows/reusable.yml@master
     with:
       version: ${{ github.event.inputs.version }}
     secrets:

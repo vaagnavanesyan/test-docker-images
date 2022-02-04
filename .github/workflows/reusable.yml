@@ -19,10 +19,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build and push Docker image
+
+      - name: Build and push versioned image only
+        if: github.ref  != 'refs/heads/master'
         uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+          repository: vaagn/test-docker-images
+          tags: ${{ inputs.version }}
+
+      - name: Build and push versioned and latest image
+        if: github.ref  == 'refs/heads/master'
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.username }}
+          tag_with_ref: true
           password: ${{ secrets.password }}
           repository: vaagn/test-docker-images
           tags: ${{ inputs.version }}

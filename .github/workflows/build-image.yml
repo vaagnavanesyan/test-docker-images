@@ -6,12 +6,11 @@ on:
         description: "image version"
         required: true
         type: string
+    secrets:
       username:
-        type: string
         description: "registry username"
         required: true
       password:
-        type: string
         description: "registry password"
         required: true
 jobs:
@@ -23,7 +22,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
         with:
-          username: ${{ inputs.username }}
-          password: ${{ inputs.password }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
           repository: vaagn/test-docker-images
           tags: ${{ inputs.version }}
